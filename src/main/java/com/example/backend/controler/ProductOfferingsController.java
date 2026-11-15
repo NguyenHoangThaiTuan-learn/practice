@@ -39,4 +39,15 @@ public class ProductOfferingsController {
         ProductOfferings productOfferings = productOfferingsService.findByNameAndColor(name,color);
         return ResponseEntity.ok(productOfferings);
     }
+
+    @PostMapping()
+    public ResponseEntity<ProductOfferings> create(@RequestBody ProductOfferings productOfferings){
+        return ResponseEntity.ok(productOfferingsService.create(productOfferings));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductOfferings> update(@PathVariable("id") Long id,
+            @RequestBody ProductOfferings request){
+        return ResponseEntity.ok(productOfferingsService.update(id,request));
+    }
 }

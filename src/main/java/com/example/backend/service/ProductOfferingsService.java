@@ -12,4 +12,8 @@ public interface ProductOfferingsService {
     ProductOfferings findByName(String name);
 
     ProductOfferings findByNameAndColor(String name, String color);
+
+    ProductOfferings create(ProductOfferings productOfferings);
+
+    ProductOfferings update(Long id, ProductOfferings productOfferings);
 }
