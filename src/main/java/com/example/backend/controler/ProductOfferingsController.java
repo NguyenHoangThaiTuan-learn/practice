@@ -1,12 +1,14 @@
 package com.example.backend.controler;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import com.example.backend.entity.ProductOfferings;
-import lombok.RequiredArgsConstructor;
 import com.example.backend.service.ProductOfferingsService;
 
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @RestController()
 @RequestMapping("/products")
@@ -34,20 +36,19 @@ public class ProductOfferingsController {
     }
 
     @GetMapping("/name-color")
-    public ResponseEntity<ProductOfferings> findByNameAndColor(@RequestParam("name") String name,
-                                                               @RequestParam("color") String color) {
-        ProductOfferings productOfferings = productOfferingsService.findByNameAndColor(name,color);
+    public ResponseEntity<ProductOfferings> findByNameAndColor(
+            @RequestParam("name") String name, @RequestParam("color") String color) {
+        ProductOfferings productOfferings = productOfferingsService.findByNameAndColor(name, color);
         return ResponseEntity.ok(productOfferings);
     }
 
     @PostMapping()
-    public ResponseEntity<ProductOfferings> create(@RequestBody ProductOfferings productOfferings){
+    public ResponseEntity<ProductOfferings> create(@RequestBody ProductOfferings productOfferings) {
         return ResponseEntity.ok(productOfferingsService.create(productOfferings));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductOfferings> update(@PathVariable("id") Long id,
-            @RequestBody ProductOfferings request){
-        return ResponseEntity.ok(productOfferingsService.update(id,request));
+    public ResponseEntity<ProductOfferings> update(@PathVariable("id") Long id, @RequestBody ProductOfferings request) {
+        return ResponseEntity.ok(productOfferingsService.update(id, request));
     }
 }

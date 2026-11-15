@@ -2,8 +2,10 @@ package com.example.backend.entity;
 
 import java.io.Serializable;
 
-import com.example.backend.common.StatusEnum;
 import jakarta.persistence.*;
+
+import com.example.backend.common.StatusEnum;
+
 import lombok.*;
 
 @Entity
@@ -29,7 +31,7 @@ public class ProductOfferings implements Serializable {
     @Column(name = "color")
     private String color;
 
-    @Column(name="status")
+    @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
 }

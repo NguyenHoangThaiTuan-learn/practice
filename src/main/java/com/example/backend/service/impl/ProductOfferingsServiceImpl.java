@@ -1,15 +1,17 @@
 package com.example.backend.service.impl;
 
-import com.example.backend.common.StatusEnum;
+import java.util.List;
+
 import jakarta.persistence.EntityNotFoundException;
+
 import org.springframework.stereotype.Service;
 
+import com.example.backend.common.StatusEnum;
 import com.example.backend.entity.ProductOfferings;
-import lombok.RequiredArgsConstructor;
 import com.example.backend.repository.ProductOfferingRepo;
 import com.example.backend.service.ProductOfferingsService;
 
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -41,8 +43,9 @@ public class ProductOfferingsServiceImpl implements ProductOfferingsService {
     @Override
     public ProductOfferings findByNameAndColor(String name, String color) {
         ProductOfferings product = productOfferingRepo
-                .findByNameAndColor(name,color)
-                .orElseThrow(() -> new EntityNotFoundException("Can not find product with name " + name + " and color " + color));
+                .findByNameAndColor(name, color)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Can not find product with name " + name + " and color " + color));
         return product;
     }
 
@@ -59,8 +62,9 @@ public class ProductOfferingsServiceImpl implements ProductOfferingsService {
 
     @Override
     public ProductOfferings update(Long id, ProductOfferings request) {
-        ProductOfferings entity = productOfferingRepo.findById(id)
-                .orElseThrow(()->new EntityNotFoundException("not found product with id "+id));
+        ProductOfferings entity = productOfferingRepo
+                .findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("not found product with id " + id));
 
         entity.setColor(request.getColor());
         entity.setName(request.getName());
