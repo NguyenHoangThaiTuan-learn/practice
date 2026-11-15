@@ -2,15 +2,9 @@ package com.example.backend.entity;
 
 import java.io.Serializable;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.example.backend.common.StatusEnum;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Table(name = "product_offerings")
@@ -18,10 +12,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class ProductOfferings implements Serializable {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")
@@ -32,4 +28,8 @@ public class ProductOfferings implements Serializable {
 
     @Column(name = "color")
     private String color;
+
+    @Column(name="status")
+    @Enumerated(EnumType.STRING)
+    private StatusEnum status;
 }
