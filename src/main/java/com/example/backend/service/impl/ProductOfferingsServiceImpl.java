@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.backend.common.StatusEnum;
 import com.example.backend.entity.ProductOfferings;
-import com.example.backend.repository.ProductOfferingRepo;
+import com.example.backend.repository.ProductOfferingRepository;
 import com.example.backend.service.ProductOfferingsService;
 
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProductOfferingsServiceImpl implements ProductOfferingsService {
 
-    private final ProductOfferingRepo productOfferingRepo;
+    private final ProductOfferingRepository productOfferingRepo;
 
     @Override
     public ProductOfferings getById(Long id) {

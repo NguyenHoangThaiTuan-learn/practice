@@ -1,9 +1,11 @@
 package com.example.backend.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import jakarta.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.*;
@@ -39,4 +41,11 @@ public class ProductDetail implements Serializable {
 
     @Column(name = "video")
     private String video;
+
+    //    @OneToMany(mappedBy = "productDetail")
+    //    private List<ProductOfferings> productOfferings;
+
+    @OneToMany(mappedBy = "productDetail")
+    @JsonIgnore
+    private List<ProductOfferingDetail> productDetails;
 }
