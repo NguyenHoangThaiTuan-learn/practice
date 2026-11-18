@@ -1,6 +1,7 @@
 package com.example.backend.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import jakarta.persistence.*;
 
@@ -39,7 +40,11 @@ public class ProductOfferings implements Serializable {
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "detail_id", referencedColumnName = "id")
-    private ProductDetail productDetail;
+    //    @OneToOne(fetch = FetchType.LAZY)
+    //    @ManyToOne
+    //    @JoinColumn(name = "detail_id", referencedColumnName = "id")
+    //    private ProductDetail productDetail;
+
+    @OneToMany(mappedBy = "productOfferings")
+    private List<ProductOfferingDetail> productOfferingDetails;
 }
