@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.backend.dto.request.ProductOfferingCreateRequest;
 import com.example.backend.entity.ProductOfferings;
 import com.example.backend.service.ProductOfferingsService;
 
@@ -43,8 +44,8 @@ public class ProductOfferingsController {
     }
 
     @PostMapping()
-    public ResponseEntity<ProductOfferings> create(@RequestBody ProductOfferings productOfferings) {
-        return ResponseEntity.ok(productOfferingsService.create(productOfferings));
+    public ResponseEntity<ProductOfferings> create(@RequestBody ProductOfferingCreateRequest request) {
+        return ResponseEntity.ok(productOfferingsService.create(request));
     }
 
     @PutMapping("/{id}")

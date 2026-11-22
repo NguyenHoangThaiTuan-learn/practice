@@ -2,6 +2,7 @@ package com.example.backend.service;
 
 import java.util.List;
 
+import com.example.backend.dto.request.ProductOfferingCreateRequest;
 import com.example.backend.entity.ProductOfferings;
 
 public interface ProductOfferingsService {
@@ -13,7 +14,7 @@ public interface ProductOfferingsService {
 
     ProductOfferings findByNameAndColor(String name, String color);
 
-    ProductOfferings create(ProductOfferings productOfferings);
+    ProductOfferings create(ProductOfferingCreateRequest request);
 
     ProductOfferings update(Long id, ProductOfferings productOfferings);
 }
