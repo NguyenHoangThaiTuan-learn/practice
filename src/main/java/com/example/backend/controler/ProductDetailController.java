@@ -3,10 +3,9 @@ package com.example.backend.controler;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import com.example.backend.dto.request.ProductDetailCreateRequest;
 import com.example.backend.entity.ProductDetail;
 import com.example.backend.service.ProductDetailService;
 
@@ -22,5 +21,10 @@ public class ProductDetailController {
     public ResponseEntity<List<ProductDetail>> getAll() {
         List<ProductDetail> productDetails = productDetailService.getAll();
         return ResponseEntity.ok(productDetails);
+    }
+
+    @PostMapping()
+    public ResponseEntity<ProductDetail> create(@RequestBody ProductDetailCreateRequest request) {
+        return ResponseEntity.ok(productDetailService.create(request));
     }
 }

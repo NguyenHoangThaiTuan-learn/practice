@@ -7,6 +7,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.example.backend.common.StatusEnum;
+import com.example.backend.dto.request.ProductOfferingCreateRequest;
 import com.example.backend.entity.ProductOfferings;
 import com.example.backend.repository.ProductOfferingRepository;
 import com.example.backend.service.ProductOfferingsService;
@@ -50,7 +51,7 @@ public class ProductOfferingsServiceImpl implements ProductOfferingsService {
     }
 
     @Override
-    public ProductOfferings create(ProductOfferings request) {
+    public ProductOfferings create(ProductOfferingCreateRequest request) {
         ProductOfferings entity = ProductOfferings.builder()
                 .color(request.getColor())
                 .name(request.getName())
