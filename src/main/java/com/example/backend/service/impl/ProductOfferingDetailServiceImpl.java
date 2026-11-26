@@ -1,8 +1,6 @@
 package com.example.backend.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.stereotype.Service;
 
@@ -27,12 +25,12 @@ public class ProductOfferingDetailServiceImpl implements ProductOfferingDetailSe
 
     @Override
     public ProductOfferings assignProductDetail(AssignProductDetailDetailRequest request) {
+        List<Long> productDetailIds = new LinkedList<>(new HashSet<>(request.getProductDetailIds()));
         if (request.getProductOfferingId() == null) {
             throw new RuntimeException("ProductOfferingId is null");
         }
 
-        if (request.getProductDetailIds() == null
-                || request.getProductDetailIds().isEmpty()) {
+        if (productDetailIds == null || productDetailIds.isEmpty()) {
             throw new RuntimeException("Product Detail not null or empty");
         }
 
@@ -42,13 +40,23 @@ public class ProductOfferingDetailServiceImpl implements ProductOfferingDetailSe
             throw new RuntimeException("not found productOffering with id +" + request.getProductOfferingId());
         }
 
-        List<ProductDetail> productDetails = productDetailRepository.findAllById(request.getProductDetailIds());
+        List<ProductDetail> productDetails = productDetailRepository.findAllById(productDetailIds);
         if (productDetails.isEmpty()) {
             throw new RuntimeException("product detail is empty");
         }
 
+        List<ProductOfferingDetail> existsProductOfferingDetail =
+                productOfferingDetailRepository.findAllByProductOfferingsId(request.getProductOfferingId());
+        List<Long> existsProductDetailId = existsProductOfferingDetail.stream()
+                .map(d -> d.getProductDetail().getId())
+                .toList();
+
         List<ProductOfferingDetail> productOfferingDetails = new ArrayList<>();
         for (int i = 0; i < productDetails.size(); i++) {
+            if (existsProductDetailId.contains(productDetails.get(i).getId())) {
+                continue;
+            }
+
             ProductOfferingDetail productOfferingDetail = new ProductOfferingDetail();
             productOfferingDetail.setProductOfferings(productOfferings.get());
             productOfferingDetail.setProductDetail(productDetails.get(i));

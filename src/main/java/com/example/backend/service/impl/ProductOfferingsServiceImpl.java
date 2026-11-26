@@ -1,8 +1,14 @@
 package com.example.backend.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 
 import org.springframework.stereotype.Service;
 
@@ -19,6 +25,8 @@ import lombok.RequiredArgsConstructor;
 public class ProductOfferingsServiceImpl implements ProductOfferingsService {
 
     private final ProductOfferingRepository productOfferingRepo;
+
+    private final EntityManager entityManager;
 
     @Override
     public ProductOfferings getById(Long id) {
@@ -74,5 +82,42 @@ public class ProductOfferingsServiceImpl implements ProductOfferingsService {
         entity = productOfferingRepo.save(entity);
 
         return entity;
+    }
+
+    @Override
+    public List<ProductOfferings> filter(String name, Long minPrice, Long maxPrice, String color, String status) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<ProductOfferings> query = criteriaBuilder.createQuery(ProductOfferings.class);
+
+        Root<ProductOfferings> root = query.from(ProductOfferings.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+        if (name != null && !name.isEmpty()) {
+            Predicate predicate = criteriaBuilder.like(root.get("name"), "%" + name + "%");
+            predicates.add(predicate);
+        }
+
+        if (minPrice != null) {
+            Predicate predicate = criteriaBuilder.greaterThanOrEqualTo(root.get("price"), minPrice);
+            predicates.add(predicate);
+        }
+
+        if (maxPrice != null) {
+            Predicate predicate = criteriaBuilder.lessThanOrEqualTo(root.get("price"), maxPrice);
+            predicates.add(predicate);
+        }
+
+        if (color != null && !color.isEmpty()) {
+            Predicate predicate = criteriaBuilder.equal(root.get("color"), color);
+            predicates.add(predicate);
+        }
+
+        if (status != null && !status.isEmpty()) {
+            Predicate predicate = criteriaBuilder.equal(root.get("status"), status);
+            predicates.add(predicate);
+        }
+
+        query.where(predicates.toArray(new Predicate[0]));
+        return entityManager.createQuery(query).getResultList();
     }
 }
