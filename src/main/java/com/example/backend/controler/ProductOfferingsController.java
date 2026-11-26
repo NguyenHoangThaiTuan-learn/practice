@@ -12,11 +12,21 @@ import com.example.backend.service.ProductOfferingsService;
 import lombok.RequiredArgsConstructor;
 
 @RestController()
-@RequestMapping("/products")
+@RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
 public class ProductOfferingsController {
 
     private final ProductOfferingsService productOfferingsService;
+
+    @GetMapping("/filter")
+    public ResponseEntity<List<ProductOfferings>> filter(
+            @RequestParam(name = "name", required = false) String name,
+            @RequestParam(name = "minPrice", required = false) Long minPrice,
+            @RequestParam(name = "maxPrice", required = false) Long maxPrice,
+            @RequestParam(name = "color", required = false) String color,
+            @RequestParam(name = "status", required = false) String status) {
+        return ResponseEntity.ok(productOfferingsService.filter(name, minPrice, maxPrice, color, status));
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductOfferings> getById(@PathVariable("id") Long id) {

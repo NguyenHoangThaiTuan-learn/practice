@@ -13,7 +13,7 @@ import com.example.backend.service.ProductOfferingDetailService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/product-offering-details")
+@RequestMapping("/api/v1/product-offering-details")
 @RequiredArgsConstructor
 public class ProductOfferingDetailController {
     private final ProductOfferingDetailService productOfferingDetailService;

@@ -17,4 +17,6 @@ public interface ProductOfferingsService {
     ProductOfferings create(ProductOfferingCreateRequest request);
 
     ProductOfferings update(Long id, ProductOfferings productOfferings);
+
+    List<ProductOfferings> filter(String name, Long minPrice, Long maxPrice, String color, String status);
 }
